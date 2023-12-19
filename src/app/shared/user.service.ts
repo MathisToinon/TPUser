@@ -84,4 +84,12 @@ export class UserService {
   get users(): Observable<User[]> {
     return of(this._users);
   }
+
+  addUser(user: User): Observable<string> {
+    this._users.push(user)
+    return of('user ajouté');
+  }
+  updateUser(user: User): Observable<string>{
+      return of('user modifié');
+  }
 }
