@@ -4,7 +4,7 @@
   Add
 </button>
 
-<mat-table [dataSource]="dataSource" *ngIf="!formVisible">
+<mat-table [dataSource]="dataSource" *ngIf="(!addformVisible) && (!updateFormVisible)">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
@@ -32,8 +32,8 @@
     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element">
       <button mat-stroked-button (click)="detailsClick(element)">details</button>
-      <button mat-stroked-button (click)="updateUser(element)">update</button>
-      <button mat-stroked-button (click)="deleteClick(element)">delete</button>
+      <button mat-stroked-button (click)="onUpdateUserBtnClick(element)">update</button>
+      <button mat-stroked-button color="accent" (click)="deleteClick(element)">delete</button>
     </mat-cell>
   </ng-container>
 
@@ -42,5 +42,6 @@
 </mat-table>
 
 <app-user-details [userSubmit]="userSelectionne" *ngIf="userSelectionne"></app-user-details>
-<app-add-user (users)="onNewUser($event)" *ngIf="formVisible"></app-add-user>
+<app-add-user (users)="onNewUser($event)" *ngIf="addformVisible"></app-add-user>
+<app-update-user [userSubmit]="userUpdateSelectionne" (users)="onUpdateUser($event)" *ngIf="updateFormVisible"></app-update-user>
 

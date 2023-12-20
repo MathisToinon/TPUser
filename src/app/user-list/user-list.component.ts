@@ -10,7 +10,9 @@ import {UserService} from "../shared/user.service";
 })
 export class UserListComponent {
   userSelectionne!:User;
-  formVisible = false;
+  userUpdateSelectionne!:User;
+  addformVisible:boolean = false;
+  updateFormVisible:boolean = false
   users : User[] = [];
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio'];
 
@@ -36,20 +38,26 @@ export class UserListComponent {
       console.log("ok");
     }
   }
-  onAddUserBtnClick() {this.formVisible = true;}
+  onAddUserBtnClick() {this.addformVisible = true;}
+  onUpdateUserBtnClick(user: User){
+      this.userUpdateSelectionne = user;
+      console.log(this.userUpdateSelectionne);
+      this.updateFormVisible = true;
+  }
   onNewUser(event:User){
     //this.ELEMENT_DATA.push(event);
       this.userService.addUser(event).subscribe(message => {
           console.log(message);
           this.dataSource.data = this.users; // Mettez à jour la source de données pour le tableau Material
       });
-      this.formVisible = false;
+      this.addformVisible = false;
   }
 
-  updateUser(user:User){
+  onUpdateUser(user:User){
       this.userService.updateUser(user).subscribe(message => {
           console.log(message);
           this.dataSource.data = this.users; // Mettez à jour la source de données pour le tableau Material
       });
+      this.updateFormVisible = false;
   }
 }

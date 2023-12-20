@@ -11,8 +11,8 @@ export class AddUserComponent {
   @Output() users = new EventEmitter<User>();
 
   id:number= 0;
-  name:string= "prenom";
-  occupation:string= "travail";
+  name:string= "name";
+  occupation:string= "occupation";
   email:string="email";
 
   constructor() {
