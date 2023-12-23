@@ -1,5 +1,6 @@
 
   <form ngForm #postForm class="form">
+    <h2>Add User</h2>
     <mat-form-field>
       <input matInput [(ngModel)]="id" name="id" type="text">
     </mat-form-field>
@@ -12,7 +13,7 @@
     <mat-form-field>
       <input matInput [(ngModel)]="email" name="email" type="text">
     </mat-form-field>
-    <button mat-stroked-button (click)="onSubmit();">Send</button>
+    <button mat-flat-button color="accent" (click)="onSubmit();">Send</button>
   </form>
-  <button routerLink="/home">Back to User List</button>
+  <button mat-flat-button color="primary" class="return" routerLink="/home">Back to User List</button>
 

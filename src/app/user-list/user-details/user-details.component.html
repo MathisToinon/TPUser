@@ -1,15 +1,32 @@
-<mat-list>
-  <mat-list-item>
-    <p>{{ selectedUser?.name }}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <p>{{ selectedUser?.occupation }}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <p>{{ selectedUser?.email }}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <p>{{ selectedUser?.bio }}</p>
-  </mat-list-item>
-</mat-list>
-<button routerLink="/home">Back to User List</button>
+<div class="container">
+  <h2>User Details</h2>
+  <mat-list>
+    <mat-list-item>
+      <div class="item">
+        <h3>Name :</h3>
+        <p>{{ selectedUser?.name }}</p>
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div class="item">
+        <h3>Occupation :</h3>
+        <p>{{ selectedUser?.occupation }}</p>
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div class="item">
+        <h3>Email :</h3>
+        <p>{{ selectedUser?.email }}</p>
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div class="item">
+        <h3>Bio :</h3>
+        <p>{{ selectedUser?.bio }}</p>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
+
+
+<button mat-flat-button color="primary" routerLink="/home">Back to User List</button>

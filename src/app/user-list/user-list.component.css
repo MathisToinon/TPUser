@@ -1,10 +1,75 @@
-.example-container {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
+.container {
+  max-width: 90%;
+  margin: auto;
+  padding: 3%;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
+/* Button Styles */
+.add {
+  margin-left: 90%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+mat-flat-button {
+  background-color: #2196F3; /* Material Blue */
+  color: #fff;
+}
+
+mat-stroked-button {
+  border: 2px solid #2196F3; /* Material Blue */
+  color: #2196F3;
+}
+
+mat-stroked-button[color="accent"] {
+  border-color: #FF4081; /* Material Pink */
+  color: #FF4081;
+}
+
+/* Table Styles */
+mat-table {
+  width: 90%;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+mat-header-cell,
+mat-cell {
+  padding: 5px;
+  text-align: left;
+}
+
+mat-header-row,
+mat-row {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+}
+
+/* Paginator Styles */
+mat-paginator {
+  margin-top: 20px;
+  width: fit-content;
+  margin-left: auto;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+/* Update User Form Styles */
+app-update-user {
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-left: 20px;
 }
