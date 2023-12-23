@@ -4,7 +4,7 @@
   Add
 </button>
 
-<mat-table [dataSource]="dataSource" *ngIf="!updateFormVisible">
+<mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
@@ -32,7 +32,7 @@
     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element">
       <button mat-stroked-button color="accent" routerLink="/details/{{element.id}}">details</button>
-      <button mat-stroked-button color="accent" (click)="onUpdateUserBtnClick(element)">update</button>
+      <button mat-stroked-button color="accent" routerLink="/update/{{element.id}}">update</button>
       <button mat-stroked-button color="warn" (click)="deleteClick(element)">delete</button>
     </mat-cell>
   </ng-container>
@@ -46,5 +46,4 @@
                  [pageSizeOptions]="[5, 10, 20]"
                  [showFirstLastButtons]="true">
   </mat-paginator>
-<app-update-user [userSubmit]="userUpdateSelectionne" (users)="onUpdateUser($event)" *ngIf="updateFormVisible"></app-update-user>
 </div>

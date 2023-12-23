@@ -9,10 +9,7 @@ import {MatPaginator} from "@angular/material/paginator";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent {
-  userSelectionne!:User;
-  userUpdateSelectionne!:User;
-  updateFormVisible:boolean = false
+export class UserListComponent{
   users : User[] = [];
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,27 +41,5 @@ export class UserListComponent {
       this.cdr.detectChanges();
       console.log("ok");
     }
-  }
-
-  onUpdateUserBtnClick(user: User){
-      this.userUpdateSelectionne = user;
-      console.log(this.userUpdateSelectionne);
-      this.updateFormVisible = true;
-  }
-  onNewUser(event:User){
-    //this.ELEMENT_DATA.push(event);
-      console.log(event)
-      this.userService.addUser(event).subscribe(message => {
-          console.log(message);
-          this.dataSource.data = this.users; // Mettez à jour la source de données pour le tableau Material
-      });
-  }
-
-  onUpdateUser(user:User){
-      this.userService.updateUser(user).subscribe(message => {
-          console.log(message);
-          this.dataSource.data = this.users; // Mettez à jour la source de données pour le tableau Material
-      });
-      this.updateFormVisible = false;
   }
 }
