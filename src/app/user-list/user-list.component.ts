@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {User} from "./user.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {UserService} from "../shared/user.service";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-user-list',
@@ -14,6 +15,15 @@ export class UserListComponent {
   updateFormVisible:boolean = false
   users : User[] = [];
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    /**
+     * Set the paginator after the view init since this component will
+     * be able to query its view for the initialized paginator.
+     */
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
+    }
 
   dataSource:MatTableDataSource<User>;
   constructor(private cdr: ChangeDetectorRef, private userService:UserService) {
