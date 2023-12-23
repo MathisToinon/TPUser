@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from "../user.model";
+import {UserService} from "../../shared/user.service";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class AddUserComponent {
   occupation:string= "occupation";
   email:string="email";
 
-  constructor() {
+  constructor(private userService : UserService) {
   }
   onSubmit(){
     const newUser = new User();
@@ -23,6 +24,6 @@ export class AddUserComponent {
     newUser.name = this.name;
     newUser.occupation = this.occupation;
     newUser.email = this.email;
-    this.users.emit(newUser);
+    this.userService.addUser(newUser);
   }
 }

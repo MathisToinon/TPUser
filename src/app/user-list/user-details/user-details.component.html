@@ -1,14 +1,15 @@
 <mat-list>
   <mat-list-item>
-    <p>{{ userSubmit?.name }}</p>
+    <p>{{ selectedUser?.name }}</p>
   </mat-list-item>
   <mat-list-item>
-    <p>{{ userSubmit?.occupation }}</p>
+    <p>{{ selectedUser?.occupation }}</p>
   </mat-list-item>
   <mat-list-item>
-    <p>{{ userSubmit?.email }}</p>
+    <p>{{ selectedUser?.email }}</p>
   </mat-list-item>
   <mat-list-item>
-    <p>{{ userSubmit?.bio }}</p>
+    <p>{{ selectedUser?.bio }}</p>
   </mat-list-item>
 </mat-list>
+<button routerLink="/home">Back to User List</button>

@@ -11,7 +11,6 @@ import {UserService} from "../shared/user.service";
 export class UserListComponent {
   userSelectionne!:User;
   userUpdateSelectionne!:User;
-  addformVisible:boolean = false;
   updateFormVisible:boolean = false
   users : User[] = [];
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio'];
@@ -26,9 +25,7 @@ export class UserListComponent {
         this.dataSource.data = [...this.users];
     });
   }
-  detailsClick(user:User) {
-    this.userSelectionne = user;
-  }
+
   deleteClick(user:User) {
     let index = this.users.indexOf(user);
     if (index !== -1) {
@@ -38,7 +35,7 @@ export class UserListComponent {
       console.log("ok");
     }
   }
-  onAddUserBtnClick() {this.addformVisible = true;}
+
   onUpdateUserBtnClick(user: User){
       this.userUpdateSelectionne = user;
       console.log(this.userUpdateSelectionne);
@@ -46,11 +43,11 @@ export class UserListComponent {
   }
   onNewUser(event:User){
     //this.ELEMENT_DATA.push(event);
+      console.log(event)
       this.userService.addUser(event).subscribe(message => {
           console.log(message);
           this.dataSource.data = this.users; // Mettez à jour la source de données pour le tableau Material
       });
-      this.addformVisible = false;
   }
 
   onUpdateUser(user:User){
