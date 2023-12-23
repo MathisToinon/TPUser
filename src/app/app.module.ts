@@ -13,14 +13,29 @@ import { MenuComponent } from './menu/menu.component';
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import { UpdateUserComponent } from './user-list/update-user/update-user.component';
+import {RouterModule, Routes} from "@angular/router";
+import { ConnexionComponent } from './connexion/connexion.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
+export const routes: Routes = [
+    //home page
+    {path:'home', component:UserListComponent},
+    {path:'', redirectTo:'home', pathMatch:'full'},
+    {path:'login', component:ConnexionComponent},
+    {path:'add', component:AddUserComponent},
+    {path:'update/:id', component:UpdateUserComponent},
+    {path: 'details/:id', component:UserDetailsComponent}
+];
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
     AddUserComponent,
     UserDetailsComponent,
-    MenuComponent
+    MenuComponent,
+    UpdateUserComponent,
+    ConnexionComponent
   ],
     imports: [
         BrowserModule,
@@ -30,7 +45,9 @@ import {MatButtonModule} from "@angular/material/button";
         MatListModule,
         FormsModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        RouterModule.forRoot(routes),
+        MatPaginatorModule
     ],
   providers: [],
   bootstrap: [AppComponent]

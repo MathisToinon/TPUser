@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {User} from "../user-list/user.model";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +79,9 @@ export class UserService {
       bio: "Crafting engaging and informative written content.",
     },
   ];
+  private selectedUser: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   get users(): Observable<User[]> {
     return of(this._users);
@@ -87,9 +89,30 @@ export class UserService {
 
   addUser(user: User): Observable<string> {
     this._users.push(user)
-    return of('user ajouté');
+    console.log('tesyt');
+    this.router.navigate(['home']);
+    return of('user add');
   }
   updateUser(user: User): Observable<string>{
-      return of('user modifié');
+    const index = this._users.findIndex(u => u.id === user.id); // Assuming each user has a unique identifier like 'id'
+
+    if (index !== -1) {
+      this._users[index] = user;
+      this.router.navigate(['home']);
+      return of('user modified');
+    } else {
+      return of('user not found');
+    }
+  }
+  selectUser(id:number){
+    const users = this.users
+    const user = this._users.find(u => u.id === id); // Assuming each user has a unique identifier like 'id'
+
+    if (id !== -1) {
+      this.selectedUser.next(user);
+    }
+  }
+  getSelectedUser(): Observable<User | undefined> {
+    return this.selectedUser.asObservable();
   }
 }
