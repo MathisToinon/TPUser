@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { User } from '../user-list/user.model';
-import { Router } from '@angular/router';
-import { HttpService } from './http-service';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {User} from '../user-list/user.model';
+import {Router} from '@angular/router';
+import {HttpService} from './http-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ export class UserService {
 
   constructor(private router: Router, private http: HttpService) {
     this.getUsers(); // Appel initial pour récupérer les utilisateurs
-    this.router.navigate(['/home']);
   }
 
   getUsers() {
@@ -61,5 +60,9 @@ export class UserService {
 
   getSelectedUser(): Observable<User | undefined> {
     return this.selectedUser.asObservable();
+  }
+
+  getUserByUsername(username: string) {
+    return this._users.value.find(u => u.name === username);
   }
 }
