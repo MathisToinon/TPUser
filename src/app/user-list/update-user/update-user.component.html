@@ -10,6 +10,9 @@
     <mat-form-field>
         <input matInput [(ngModel)]="selectedUser.email" name="email" type="text">
     </mat-form-field>
+    <mat-form-field>
+        <input matInput [(ngModel)]="selectedUser.bio" name="bio" type="text">
+    </mat-form-field>
     <button mat-flat-button color="accent" (click)="onSubmit();">Send</button>
 </form>
 <button mat-flat-button color="primary" routerLink="/home" class="return">Back to User List</button>

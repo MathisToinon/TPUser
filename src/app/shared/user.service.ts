@@ -1,117 +1,64 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, of} from "rxjs";
-import {User} from "../user-list/user.model";
-import {Router} from "@angular/router";
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../user-list/user.model';
+import { Router } from '@angular/router';
+import { HttpService } from './http-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  private _users: User[] = [
-    {
-      id: 1,
-      name: "John Doe",
-      occupation: "Software Developer",
-      email: "john.doe@example.com",
-      bio: "Passionate about coding and building innovative solutions.",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      occupation: "Graphic Designer",
-      email: "jane.smith@example.com",
-      bio: "Creative mind with a flair for visual aesthetics.",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      occupation: "Data Scientist",
-      email: "bob.johnson@example.com",
-      bio: "Analyzing data to derive meaningful insights.",
-    },
-    {
-      id: 4,
-      name: "Alice Williams",
-      occupation: "Marketing Specialist",
-      email: "alice.williams@example.com",
-      bio: "Crafting compelling narratives for effective marketing.",
-    },
-    {
-      id: 5,
-      name: "Charlie Brown",
-      occupation: "Product Manager",
-      email: "charlie.brown@example.com",
-      bio: "Driving product development and strategy.",
-    },
-    {
-      id: 6,
-      name: "Eva Martinez",
-      occupation: "UX/UI Designer",
-      email: "eva.martinez@example.com",
-      bio: "Creating delightful user experiences through design.",
-    },
-    {
-      id: 7,
-      name: "David Clark",
-      occupation: "Financial Analyst",
-      email: "david.clark@example.com",
-      bio: "Analyzing financial data for informed decision-making.",
-    },
-    {
-      id: 8,
-      name: "Grace Taylor",
-      occupation: "HR Manager",
-      email: "grace.taylor@example.com",
-      bio: "Fostering a positive work environment and talent acquisition.",
-    },
-    {
-      id: 9,
-      name: "Samuel White",
-      occupation: "Network Engineer",
-      email: "samuel.white@example.com",
-      bio: "Building and maintaining robust network infrastructure.",
-    },
-    {
-      id: 10,
-      name: "Olivia Adams",
-      occupation: "Content Writer",
-      email: "olivia.adams@example.com",
-      bio: "Crafting engaging and informative written content.",
-    },
-  ];
+  private _users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   private selectedUser: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(private router:Router) { }
+  constructor(private router: Router, private http: HttpService) {
+    this.getUsers(); // Appel initial pour récupérer les utilisateurs
+    this.router.navigate(['/home']);
+  }
+
+  getUsers() {
+    this.http.getUsers().subscribe(
+        (data: User[]) => {
+          console.log(data);
+          this._users.next(data); // Mettez à jour le BehaviorSubject avec les nouvelles données
+        },
+        (error) => {
+          console.error('Error fetching users', error);
+        }
+    );
+  }
 
   get users(): Observable<User[]> {
-    return of(this._users);
+    return this._users.asObservable();
   }
 
   addUser(user: User): Observable<string> {
-    this._users.push(user)
-    console.log('tesyt');
+    const lastUserId = this._users.value.length > 0 ? this._users.value[this._users.value.length - 1].id : 0;
+    // @ts-ignore
+    user.id = lastUserId + 1; // Nouvel id pour le nouvel utilisateur
+    const updatedUsers = [...this._users.value, user];
+    this._users.next(updatedUsers);
     this.router.navigate(['home']);
     return of('user add');
   }
+
+
   updateUser(user: User): Observable<string>{
-    const index = this._users.findIndex(u => u.id === user.id); // Assuming each user has a unique identifier like 'id'
-
-    if (index !== -1) {
-      this._users[index] = user;
-      this.router.navigate(['home']);
-      return of('user modified');
-    } else {
-      return of('user not found');
-    }
+    const updatedUsers = this._users.value.map(u => (u.id === user.id ? user : u));
+    this._users.next(updatedUsers);
+    this.router.navigate(['home']);
+    this.http.updateUser(user);
+    console.log("ok");
+    return of('user modified');
   }
-  selectUser(id:number){
-    const users = this.users
-    const user = this._users.find(u => u.id === id); // Assuming each user has a unique identifier like 'id'
 
-    if (id !== -1) {
+  selectUser(id:number){
+    const user = this._users.value.find(u => u.id === id);
+    if (user) {
       this.selectedUser.next(user);
     }
   }
+
   getSelectedUser(): Observable<User | undefined> {
     return this.selectedUser.asObservable();
   }

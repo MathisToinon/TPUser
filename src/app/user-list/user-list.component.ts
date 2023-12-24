@@ -14,10 +14,6 @@ export class UserListComponent{
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    /**
-     * Set the paginator after the view init since this component will
-     * be able to query its view for the initialized paginator.
-     */
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
@@ -26,10 +22,11 @@ export class UserListComponent{
   constructor(private cdr: ChangeDetectorRef, private userService:UserService) {
     this.dataSource = new MatTableDataSource<User>(this.users);
   }
-  ngOnInit(){
+  ngOnInit() {
     this.userService.users.subscribe(users => {
-        this.users = users;
-        this.dataSource.data = [...this.users];
+      this.users = users;
+      this.dataSource.data = this.users;
+      this.cdr.detectChanges();
     });
   }
 

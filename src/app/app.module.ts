@@ -17,6 +17,7 @@ import { UpdateUserComponent } from './user-list/update-user/update-user.compone
 import {RouterModule, Routes} from "@angular/router";
 import { ConnexionComponent } from './connexion/connexion.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {HttpClientModule} from "@angular/common/http";
 
 export const routes: Routes = [
     //home page
@@ -47,7 +48,8 @@ export const routes: Routes = [
         MatInputModule,
         MatButtonModule,
         RouterModule.forRoot(routes),
-        MatPaginatorModule
+        MatPaginatorModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]
